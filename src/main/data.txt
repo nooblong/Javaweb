@@ -1,0 +1,49 @@
+create table bookInfo
+(
+	id int auto_increment,
+	type varchar(50) not null,
+	name varchar(200) not null,
+	isbn varchar(15) not null,
+	publisher varchar(200) null,
+	writer varchar(50) null,
+	introduce varchar(500) null,
+	price int null,
+	pDate date default 20000101 null,
+	constraint bookInfo_pk
+		primary key (id)
+);
+
+create table member
+(
+    id        int auto_increment
+        primary key,
+    username  varchar(50)   not null,
+    password  varchar(50)   not null,
+    city      varchar(50)   null,
+    address   varchar(200)  null,
+    amount    int default 0 null,
+    tel varchar(50)   null,
+    email     varchar(50)   null,
+    freeze    int default 0 null
+);
+
+create table `order`
+(
+	id int auto_increment,
+	buyNumber int not null,
+	username varchar(50) null,
+	address varchar(200) null,
+	tel varchar(50) null,
+	pay varchar(50) null,
+	carry varchar(50) null,
+	createDate date null,
+	enforce varchar(50) default 0 null,
+	constraint order_pk
+		primary key (id)
+);
+
+create table 'admin'
+(
+    username varchar(50),
+    password varchar(50)
+);
