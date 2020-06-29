@@ -1,7 +1,7 @@
 package nooblong.servlet.login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nooblong.dao.UserDao;
+import nooblong.dao.impl.UserDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +18,8 @@ public class FindUserServlet extends HttpServlet {
         //get username
         String username = request.getParameter("username");
         //use service find user
-        UserDao userDao = new UserDao();
-        boolean hasUsername = userDao.hasUsername(username);
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        boolean hasUsername = userDaoImpl.hasUsername(username);
 
         Map<String, Object> map = new HashMap<>();
 

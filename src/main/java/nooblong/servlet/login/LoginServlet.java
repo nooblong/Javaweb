@@ -1,6 +1,6 @@
 package nooblong.servlet.login;
 
-import nooblong.dao.UserDao;
+import nooblong.dao.impl.UserDaoImpl;
 import nooblong.domain.User;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao userDao = new UserDao();
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
         User user = new User();
         Map<String, String[]> map = request.getParameterMap();
         try {
@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        User loginUser = userDao.login(user);
+        User loginUser = userDaoImpl.login(user);
         if (loginUser == null){
             //fail
             request.getRequestDispatcher("/FailServlet").forward(request, response);

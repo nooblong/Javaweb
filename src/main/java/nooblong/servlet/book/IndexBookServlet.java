@@ -1,7 +1,7 @@
 package nooblong.servlet.book;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nooblong.dao.BookDao;
+import nooblong.dao.impl.BookDaoImpl;
 import nooblong.domain.Book;
 
 import javax.servlet.ServletException;
@@ -18,10 +18,10 @@ import java.util.Random;
 public class IndexBookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("index servlet");
-        BookDao bookDao = new BookDao();
+        BookDaoImpl bookDaoImpl = new BookDaoImpl();
         //首页随机展示10本书
         int num = 10;
-        int realNum = bookDao.bookNum();
+        int realNum = bookDaoImpl.bookNum();
         if (realNum < num)
             num = realNum;
 
@@ -31,7 +31,7 @@ public class IndexBookServlet extends HttpServlet {
         List<Integer> randomList = randomList(10, realNum);
         for (int i = 0; i < num; i++) {
             int id = randomList.get(i);
-            Book bookById = bookDao.getBookById(id);
+            Book bookById = bookDaoImpl.getBookById(id);
             bookList.add(bookById);
 
         }

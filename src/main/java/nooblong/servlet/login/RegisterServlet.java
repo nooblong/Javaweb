@@ -1,6 +1,6 @@
 package nooblong.servlet.login;
 
-import nooblong.dao.UserDao;
+import nooblong.dao.impl.UserDaoImpl;
 import nooblong.domain.User;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao userDao = new UserDao();
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
         User user = new User();
         Map<String, String[]> map = request.getParameterMap();
         try {
@@ -25,9 +25,9 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        if (!userDao.hasUsername(user.getUsername())){
+        if (!userDaoImpl.hasUsername(user.getUsername())){
             //二次检验是否有此用户名
-            userDao.register(user);
+            userDaoImpl.register(user);
             request.setAttribute("user", user);
             request.getRequestDispatcher("/SuccessServlet").forward(request, response);
         }else {
