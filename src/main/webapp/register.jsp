@@ -13,13 +13,16 @@
         padding: 15px;
         margin: 0 auto;
     }
+
     .form-signin .form-signin-heading,
     .form-signin .checkbox {
         margin-bottom: 10px;
     }
+
     .form-signin .checkbox {
         font-weight: normal;
     }
+
     .form-signin .form-control {
         position: relative;
         height: auto;
@@ -29,19 +32,23 @@
         padding: 10px;
         font-size: 16px;
     }
+
     .form-signin .form-control:focus {
         z-index: 2;
     }
+
     #email {
         margin-bottom: -1px;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
     }
-    #password, #city, #username, #address{
+
+    #password, #city, #username, #address {
         margin-bottom: -1px;
         border-radius: 0;
     }
-    #tel{
+
+    #tel {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         margin-bottom: 10px;
@@ -69,26 +76,45 @@
 
 <div class="container">
 
-    <form class="form-signin">
+    <form class="form-signin" method="post" action="${pageContext.request.contextPath}/RegisterServlet">
         <h2 class="form-signin-heading">Register</h2>
 
         <label for="email" class="sr-only">Email</label>
-        <input type="email" id="email" class="form-control" placeholder="Email" required autofocus>
+        <input name="email" type="email" id="email" class="form-control" placeholder="Email" autofocus>
 
+        <script>
+            //是否存在该用户名
+            $(function () {
+                $("input[id=username]").blur(function () {
+                    //get username
+                    var username = $(this).val();
+                    <%--为什么不能用${pageContext.request.contextPath}--%>
+                    $.get("/Javaweb/FindUserServlet", {username: username}, function (data) {
+                        //userExsit:true/false
+                        if (data.userExsit) {
+                            $("#username_s").html(data.msg).css("color","red");
+                        } else {
+                            $("#username_s").html(data.msg).css("color","green");
+                        }
+                    }, "json")
+                })
+            })
+        </script>
         <label for="username" class="sr-only">Username</label>
-        <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+        <input name="username" type="text" id="username" class="form-control text-nowrap" placeholder="Username" required autofocus>
+        <span id="username_s"></span>
 
         <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Password" required>
+        <input name="password" type="password" id="password" class="form-control" placeholder="Password" required>
 
         <label for="city" class="sr-only">City</label>
-        <input type="text" id="city" class="form-control" placeholder="City" required autofocus>
+        <input name="city" type="text" id="city" class="form-control" placeholder="City" autofocus>
 
         <label for="address" class="sr-only">Address</label>
-        <input type="text" id="address" class="form-control" placeholder="Address" required autofocus>
+        <input name="address" type="text" id="address" class="form-control" placeholder="Address" autofocus>
 
         <label for="tel" class="sr-only">Tel</label>
-        <input type="tel" id="tel" class="form-control" placeholder="Tel" required autofocus>
+        <input name="tel" type="tel" id="tel" class="form-control" placeholder="Tel" autofocus>
 
         <div class="checkbox">
             <label>
@@ -99,6 +125,11 @@
     </form>
 
 </div>
+
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
