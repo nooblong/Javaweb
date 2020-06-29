@@ -10,6 +10,7 @@ import java.io.IOException;
 @WebServlet("/FailServlet")
 public class FailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("fail servlet");
         //设置编码
         response.setContentType("text/html;charset=utf-8");
         //print

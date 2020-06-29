@@ -29,6 +29,11 @@ public class UserDao {
         }
     }
 
+    /**
+     * 注册
+     * @param registerUser
+     * @return null
+     */
     public User register(User registerUser){
 
         //language=MySQL
