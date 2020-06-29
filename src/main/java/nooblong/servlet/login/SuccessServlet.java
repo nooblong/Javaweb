@@ -17,7 +17,8 @@ public class SuccessServlet extends HttpServlet {
         //获取request共享对象
         User user = (User)request.getAttribute("user");
         //print
-        response.getWriter().write("注册成功," + user.getUsername());
+        response.getWriter().write("<h1>注册/登录成功," + user.getUsername() + "    3秒后跳转到首页</h1>");
+        response.setHeader("refresh", "3;url="+request.getContextPath()+"/index.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

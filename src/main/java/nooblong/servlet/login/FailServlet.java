@@ -13,7 +13,8 @@ public class FailServlet extends HttpServlet {
         //设置编码
         response.setContentType("text/html;charset=utf-8");
         //print
-        response.getWriter().write("登录失败，用户名或密码错误");
+        response.getWriter().write("<h1>登录/注册失败，用户名或密码错误    3秒后跳转到首页</h1>");
+        response.setHeader("refresh", "3;url="+request.getContextPath()+"/index.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -20,7 +20,7 @@ public class UserDao {
     public User login(User loginUser) {
         try {
             //language=MySQL
-            String sql = "select * from user where username = ? and password = ?";
+            String sql = "select * from member where username = ? and password = ?";
             User user = template.queryForObject(sql, new BeanPropertyRowMapper<>(User.class),
                     loginUser.getUsername(), loginUser.getPassword());
             return user;
