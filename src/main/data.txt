@@ -24,7 +24,8 @@ create table member
     amount    int default 0 null,
     tel varchar(50)   null,
     email     varchar(50)   null,
-    freeze    int default 0 null
+    freeze    int default 1 null,
+    code varchar(50) null
 );
 
 create table `order`

@@ -4,6 +4,8 @@ import nooblong.dao.UserDao;
 import nooblong.dao.impl.UserDaoImpl;
 import nooblong.domain.User;
 import nooblong.service.UserService;
+import nooblong.utils.MailUtils;
+import nooblong.utils.UUIDUtil;
 
 public class UserServiceImpl implements UserService {
 
@@ -17,14 +19,35 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Boolean regist(User user) {
-        //查询数据库是否有这个人
+        //查询m名字是否存在
         User u = userDao.findUserByUserName(user.getUsername());
-        if (u == null)
+        //查询邮箱是否存在
+        User m = userDao.findUserByEmail(user.getEmail());
+        if (u == null && m == null) {
             //如果没有，保存这个人
+            //设置激活码
+            String code = UUIDUtil.getUUID();
+            user.setCode(code);
             userDao.save(user);
+
+            //发送邮件
+//            String content = "<a href='http://localhost/Javaweb/ActiveUserServlet?code="+code+">点击激活</a>";
+            String content = "http://localhost:8080/Javaweb/ActiveUserServlet?code="+code;
+            MailUtils.sendMail(user.getEmail(), content, "激活");
+        }
         else
             //如果有，返回false
             return false;
         return true;
+    }
+
+    @Override
+    public boolean active(String code){
+        User user = userDao.findUserByCode(code);
+        if (user != null){
+            userDao.updateStatus(user);
+            return true;
+        }
+        return false;
     }
 }
