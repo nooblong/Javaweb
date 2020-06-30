@@ -1,7 +1,11 @@
 package nooblong.servlet.login;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nooblong.dao.impl.UserDaoImpl;
+import nooblong.domain.ResultInfo;
 import nooblong.domain.User;
+import nooblong.service.UserService;
+import nooblong.service.impl.UserServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -25,14 +29,26 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        if (!userDaoImpl.hasUsername(user.getUsername())){
-            //二次检验是否有此用户名
-            userDaoImpl.register(user);
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/SuccessServlet").forward(request, response);
-        }else {
-            request.getRequestDispatcher("/FailServlet").forward(request, response);
+        //调用service完成注册
+        UserService userService = new UserServiceImpl();
+        Boolean flag = userService.regist(user);
+        ResultInfo resultInfo = new ResultInfo();
+        if (flag) {
+            //注册成功
+            resultInfo.setFlag(true);
+            resultInfo.setErrorMsg("注册成功");
+        } else {
+            //注册失败
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("注册失败");
         }
+
+        //将resultInfo序列化成json
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(resultInfo);
+        //通过response发送
+        response.setContentType("application/json;charset=utf-8");
+        response.getWriter().write(json);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

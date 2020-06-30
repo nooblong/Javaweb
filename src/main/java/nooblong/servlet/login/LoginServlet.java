@@ -24,7 +24,8 @@ public class LoginServlet extends HttpServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        User loginUser = userDaoImpl.login(user);
+        User loginUser = userDaoImpl.findUserByUserName(user.getUsername());
+
         if (loginUser == null){
             //fail
             request.getRequestDispatcher("/FailServlet").forward(request, response);

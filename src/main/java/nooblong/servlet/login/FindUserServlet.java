@@ -19,7 +19,8 @@ public class FindUserServlet extends HttpServlet {
         String username = request.getParameter("username");
         //use service find user
         UserDaoImpl userDaoImpl = new UserDaoImpl();
-        boolean hasUsername = userDaoImpl.hasUsername(username);
+        boolean hasUsername;
+        hasUsername = userDaoImpl.findUserByUserName(username) != null;
 
         Map<String, Object> map = new HashMap<>();
 

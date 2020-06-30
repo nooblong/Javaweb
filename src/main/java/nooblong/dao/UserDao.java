@@ -3,7 +3,6 @@ package nooblong.dao;
 import nooblong.domain.User;
 
 public interface UserDao {
-    public User login(User loginUser);
-    public User register(User registerUser);
-    public boolean hasUsername(String username);
+    public User findUserByUserName(String username);
+    public void save(User registerUser);
 }
