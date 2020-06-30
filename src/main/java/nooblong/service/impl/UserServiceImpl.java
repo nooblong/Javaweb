@@ -32,22 +32,37 @@ public class UserServiceImpl implements UserService {
 
             //发送邮件
 //            String content = "<a href='http://localhost/Javaweb/ActiveUserServlet?code="+code+">点击激活</a>";
-            String content = "http://localhost:8080/Javaweb/ActiveUserServlet?code="+code;
+            String content = "http://localhost:8080/Javaweb/ActiveUserServlet?code=" + code;
             MailUtils.sendMail(user.getEmail(), content, "激活");
-        }
-        else
+        } else
             //如果有，返回false
             return false;
         return true;
     }
 
     @Override
-    public boolean active(String code){
+    public boolean active(String code) {
         User user = userDao.findUserByCode(code);
-        if (user != null){
+        if (user != null) {
             userDao.updateStatus(user);
             return true;
         }
         return false;
+    }
+
+    /**
+     * 登录
+     *
+     * @param user 包含用户名和密码
+     * @return 完整的User
+     */
+    @Override
+    public User login(User user) {
+        User userByUserName = userDao.findUserByUserName(user.getUsername());
+        //有这用户且检测密码是正确
+        if (userByUserName != null && user.getPassword().equals(userByUserName.getPassword())) {
+            return userByUserName;
+        } else
+            return null;
     }
 }

@@ -25,6 +25,8 @@ public class ActiveUserServlet extends HttpServlet {
             }
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().write(msg);
+
+
         }
     }
 

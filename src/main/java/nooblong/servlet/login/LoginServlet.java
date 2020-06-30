@@ -1,7 +1,11 @@
 package nooblong.servlet.login;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nooblong.dao.impl.UserDaoImpl;
+import nooblong.domain.ResultInfo;
 import nooblong.domain.User;
+import nooblong.service.UserService;
+import nooblong.service.impl.UserServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -16,7 +20,7 @@ import java.util.Map;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        UserService userService = new UserServiceImpl();
         User user = new User();
         Map<String, String[]> map = request.getParameterMap();
         try {
@@ -24,16 +28,41 @@ public class LoginServlet extends HttpServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        User loginUser = userDaoImpl.findUserByUserName(user.getUsername());
 
-        if (loginUser == null){
-            //fail
-            request.getRequestDispatcher("/FailServlet").forward(request, response);
-        }else {
-            //success,save
-            request.setAttribute("user", user);
-            request.getRequestDispatcher("/SuccessServlet").forward(request, response);
+        //获取完整的User信息
+        User loginUser = userService.login(user);
+
+        //检查是否被冻结
+        boolean isFreeze = true;
+        if (loginUser != null)
+            isFreeze = loginUser.getFreeze() == 1;
+
+        ResultInfo resultInfo = new ResultInfo();
+
+        if (loginUser == null) {
+            //密码错误
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("账号或密码错误");
+        } else {
+            //密码正确
+            resultInfo.setFlag(true);
+            //检查是否被冻结
+            if (!isFreeze){
+                //没有被冻结
+
+            }else {
+                //被冻结
+                resultInfo.setFlag(false);
+                resultInfo.setErrorMsg("账号被冻结/未激活");
+            }
         }
+
+        //将resultInfo序列化成json
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(resultInfo);
+        //通过response发送
+        response.setContentType("application/json;charset=utf-8");
+        response.getWriter().write(json);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
