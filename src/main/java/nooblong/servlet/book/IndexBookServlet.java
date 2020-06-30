@@ -17,7 +17,6 @@ import java.util.Random;
 @WebServlet("/IndexBookServlet")
 public class IndexBookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("index servlet");
         BookDaoImpl bookDaoImpl = new BookDaoImpl();
         //首页随机展示10本书
         int num = 10;
@@ -27,7 +26,6 @@ public class IndexBookServlet extends HttpServlet {
 
         //10本书的列表
         List<Book> bookList = new ArrayList<>();
-        System.out.println(num + " run num");
         List<Integer> randomList = randomList(10, realNum);
         for (int i = 0; i < num; i++) {
             int id = randomList.get(i);
@@ -60,7 +58,6 @@ public class IndexBookServlet extends HttpServlet {
                 list.add(num);
             }
         }
-        System.out.println(list);
         return list;
     }
 }

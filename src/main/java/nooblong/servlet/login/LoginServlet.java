@@ -49,7 +49,8 @@ public class LoginServlet extends HttpServlet {
             //检查是否被冻结
             if (!isFreeze){
                 //没有被冻结
-
+                //写入session
+                request.getSession().setAttribute("user", loginUser);
             }else {
                 //被冻结
                 resultInfo.setFlag(false);
