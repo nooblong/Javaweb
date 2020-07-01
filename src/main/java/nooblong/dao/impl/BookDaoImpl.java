@@ -44,4 +44,23 @@ public class BookDaoImpl implements BookDao {
         RowMapper<Book> rowMapper = new BeanPropertyRowMapper<>(Book.class);
         return template.query(sql, rowMapper, type);
     }
+
+    @Override
+    public boolean addBook(Book book){
+        //language=MySQL
+        String sql = "insert into bookinfo (name, isbn, publisher, writer, introduce, price, pDate, type) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        template.update(sql, book.getName(),book.getIsbn(), book.getPublisher(),
+                book.getWriter(), book.getIntroduce(), book.getPrice(), book.getpDate(), book.getType());
+        System.out.println("save book successfully");
+        return true;
+    }
+
+    @Override
+    public List<Book> allBook(){
+        //language=MySQL
+        String sql = "select * from bookinfo";
+        RowMapper<Book> rowMapper = new BeanPropertyRowMapper<>(Book.class);
+        return template.query(sql, rowMapper);
+    }
 }

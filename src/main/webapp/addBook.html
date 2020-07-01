@@ -1,0 +1,68 @@
+<style>
+    button {
+        margin-top: 10px;
+    }
+
+    input {
+        margin-top: 5px;
+    }
+</style>
+
+<div class="container">
+    <form id="addBookForm" class="form-signin" method="post">
+        <h2 class="form-signin-heading">添加图书</h2>
+
+        <label for="name" class="sr-only">name</label>
+        <input name="name" type="text" id="name" class="form-control" placeholder="name" autofocus>
+
+        <label for="isbn" class="sr-only">isbn</label>
+        <input name="isbn" type="text" id="isbn" class="form-control" placeholder="isbn">
+
+        <label for="type" class="sr-only">type</label>
+        <input name="type" type="text" id="type" class="form-control" placeholder="type">
+
+        <label for="price" class="sr-only">price</label>
+        <input name="price" type="text" id="price" class="form-control" placeholder="price">
+
+        <label for="publisher" class="sr-only">publisher</label>
+        <input name="publisher" type="text" id="publisher" class="form-control" placeholder="publisher">
+
+        <label for="writer" class="sr-only">writer</label>
+        <input name="writer" type="text" id="writer" class="form-control" placeholder="writer">
+
+        <label for="introduce" class="sr-only">introduce</label>
+        <input name="introduce" type="text" id="introduce" class="form-control" placeholder="introduce">
+
+        <label for="pDate" class="sr-only">pDate</label>
+        <input name="pDate" type="text" id="pDate" class="form-control" placeholder="pDate">
+
+        <button id="submitButton" class="btn btn-lg btn-primary btn-block" type="submit">确定</button>
+<!--        <a id="submitButton">确定</a>-->
+    </form>
+</div>
+<script>
+    //当表单提交时
+    $("form").submit(function () {
+        alert("submit");
+        $.ajax({
+            url: "AddBookServlet",
+            async: false,
+            type: "POST",
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function (data) {
+                if (!data.flag) {
+                    alert(data.errorMsg);
+                }
+
+                if (data.flag) {
+                    alert("添加成功");
+                }
+            },
+            error: function () {
+                alert("?");
+            }
+        });
+    });
+</script>
+

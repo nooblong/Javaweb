@@ -32,4 +32,8 @@ public interface BookService {
      * @return
      */
     Book getBookById(int id);
+
+    boolean addBook(Book book);
+
+    List<Book> getAllBooks();
 }

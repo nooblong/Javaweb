@@ -10,4 +10,8 @@ public interface BookDao {
     public int bookNum(String type);
 
     List<Book> bookList(String type);
+
+    boolean addBook(Book book);
+
+    List<Book> allBook();
 }
