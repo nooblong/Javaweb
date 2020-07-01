@@ -1,6 +1,9 @@
 package nooblong.domain;
 
 public class Book {
+
+
+
     private String name;
     private String type;
     private String isbn;

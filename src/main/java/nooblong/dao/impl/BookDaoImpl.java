@@ -5,6 +5,9 @@ import nooblong.domain.Book;
 import nooblong.utils.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.util.List;
 
 public class BookDaoImpl implements BookDao {
     //声明JDBCTemplate对象共用
@@ -24,5 +27,21 @@ public class BookDaoImpl implements BookDao {
         String sql = "select count(*) from bookinfo";
         int num = template.queryForObject(sql, Integer.class);
         return num;
+    }
+
+    @Override
+    public int bookNum(String type){
+        //language=MySQL
+        String sql = "select count(*) from bookinfo where type = ?";
+        int num = template.queryForObject(sql, Integer.class, type);
+        return num;
+    }
+
+    @Override
+    public List<Book> bookList(String type){
+        //language=MySQL
+        String sql = "select * from bookinfo where type = ?";
+        RowMapper<Book> rowMapper = new BeanPropertyRowMapper<>(Book.class);
+        return template.query(sql, rowMapper, type);
     }
 }
