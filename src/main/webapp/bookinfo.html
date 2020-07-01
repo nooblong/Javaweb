@@ -18,43 +18,109 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="js/header.js"></script>
 <div id="header"></div>
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a
+        <div class="container col-lg-6">
+        <h2 id="bookName">这本书能戒烟</h2>
+        <p id = bookIntroduce>This is a template for a simple marketing or informational website. It includes a large callout called a
             jumbotron and three supporting pieces of content. Use it as a starting point to create something more
             unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        出版社:<p id="bookPublisher">中国日报</p>
+        作者:<p id="bookWriter">张三</p>
+        ISBN:<p id="bookISBN">12334554756521123</p>
+        类别:<p id="bookType">12334554756521123</p>
+        出版日期:<p id="bookPDate">2000-01-01</p>
+        RMB: <p id="bookPrice">100</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">加入购物车 &raquo;</a></p>
+        </div>
+        <div class="container col-lg-6">
+            <img src="img/smoke.jpg">
+        </div>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
-                porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        <div class="col-md-8">
+            <h2>目录</h2>
+            <p>
+                序<br>
+                引言<br>
+                第1章　你的烟瘾比我还大吗？<br>
+                第2章　轻松戒烟法<br>
+                第3章　为什么戒烟如此之难？<br>
+                第4章　险恶的陷阱<br>
+                第5章　我们为什么要吸烟？<br>
+                第6章　尼古丁上瘾<br>
+                第7章　吸烟的陷阱：洗脑<br>
+                第8章　什么是戒断反应？<br>
+                第9章　吸烟真的能释放压力吗？<br>
+                第10章　吸烟是因为无聊吗？<br>
+                第11章　吸烟与注意力问题<br>
+                第12章　吸烟可以让人放松？<br>
+                第13章　综合性吸烟<br>
+                第14章　我究竟要放弃什么？<br>
+                第15章　自愿的奴役<br>
+                第16章　你真的不在乎钱吗？<br>
+                第17章　为什么要往最坏处想？<br>
+                第18章　精力旺盛的感觉真好！<br>
+                第19章　放松与自信<br>
+                第20章　驱散心理阴影<br>
+                第21章　吸烟的好处<br>
+                第22章　意志力戒烟法的弊端<br>
+                第23章　减量戒烟法：当心！<br>
+                第24章　只要一支烟<br>
+                第25章　吸烟者的类型<br>
+                第26章　秘密吸烟者<br>
+                第27章　吸烟是一种社会风气？<br>
+                第28章　戒烟的时机<br>
+                第29章　我会怀念吸烟的感觉吗？<br>
+                第30章　我会变胖吗？<br>
+                第31章　警惕虚假的戒烟动机<br>
+                第32章　戒烟其实很简单<br>
+                第33章　戒断期<br>
+                第34章　“再来一口就好”<br>
+                第35章　我戒烟会比别人难吗？<br>
+                第36章　失败的主要原因<br>
+                第37章　你并不需要替代品！<br>
+                第38章　我需要远离诱惑吗？<br>
+                第39章　启示性的一刻<br>
+                第40章　最后一支烟<br>
+                第41章　最后的警告<br>
+                第42章　20年的反馈信息<br>
+                第43章　拯救剩下的吸烟者<br>
+                第44章　对非吸烟者的建议结语：终结这场丑行<br>
+            </p>
         </div>
     </div>
 </div>
-
+<script>
+    //获取当前的参数
+    function getQueryVariable() {
+        return window.location.search.substring(1).split("=")[1];
+    }
+    $(function () {
+        $.ajax({
+            url: "SingleBookServlet",
+            type: "POST",
+            async: "false",
+            dataType: "json",
+            data: {id: getQueryVariable()},
+            success: function (data) {
+                $("#bookName").html(data.name);
+                $("#bookIntroduce").html(data.introduce);
+                $("#bookISBN").html(data.isbn);
+                $("#bookPDate").html(data.pDate);
+                $("#bookPrice").html(data.price);
+                $("#bookPublisher").html(data.publisher);
+                $("#bookWriter").html(data.writer);
+                $("#bookType").html(data.type);
+            }
+        })
+    })
+</script>
 </body>
 </html>

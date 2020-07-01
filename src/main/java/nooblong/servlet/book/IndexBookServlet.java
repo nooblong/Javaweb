@@ -31,7 +31,6 @@ public class IndexBookServlet extends HttpServlet {
             int id = randomList.get(i);
             Book bookById = bookDaoImpl.getBookById(id);
             bookList.add(bookById);
-
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
